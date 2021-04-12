@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Monster Train Twitch Bot</title>
+
+    <link rel="stylesheet" href="assets/bulma.css" />
+  </head>
+  <body>
+    <div class="tile notification is-info">
+      <h1 class="title">Monster Train Twitch Bot</h1>
+    </div>
+
+    <div class="container is-fluid">
+      <div class="field">
+        <label class="label">Twitch username</label>
+        <div class="control">
+          <input class="input" type="text" id="username" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Channel</label>
+        <div class="control">
+          <input class="input" type="text" id="channel" />
+        </div>
+        <div class="help">
+          The Twitch Channel the bot should be listening on (this is likely your
+          Twitch channel name).
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Oauth token</label>
+        <div class="control">
+          <input class="input" type="text" id="oauth" />
+        </div>
+        <div class="help">
+          Retrieve your token by visiting and logging into:
+          <a class="external-link" href="https://twitchapps.com/tmi"
+            >https://twitchapps.com/tmi</a
+          >
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Save File Path</label>
+        <div class="control">
+          <input class="input" type="text" id="saveFilePath" />
+        </div>
+      </div>
+
+      <div class="control">
+        <button class="button is-primary" id="run-script">Run</button>
+      </div>
+    </div>
+
+    <div class="notification is-danger">
+      <button class="delete"></button>
+      Testing error
+    </div>
+
+    <script>
+      var ipcRenderer = require("electron").ipcRenderer
+      var shell = require("electron").shell
+
+      // Open external links in external browser
+      var links = document.querySelectorAll(".external-link")
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", (event) => {
+          event.preventDefault()
+          shell.openExternal(event.target.href)
+        })
+      }
+
+      // Run bot on click
+      document.querySelector("#savefilePath").value =
+        "C:\\Users\\" +
+        (process.env.username || process.env.user) +
+        "\\AppData\\LocalLow\\Shiny Shoe\\MonsterTrain\\saves\\save-singlePlayer.json"
+      document.querySelector("#run-script").addEventListener("click", () => {
+        var username = document.getElementById("username").value
+        var channel = document.getElementById("channel").value
+        var oauth = document.getElementById("oauth").value
+        var oauth = document.getElementById("oauth").value
+        var saveFilePath = document.getElementById("saveFilePath").value
+        ipcRenderer.send("run-bot", {
+          username: username,
+          channel: channel,
+          oauth: oauth,
+          saveFilePath: saveFilePath,
+        })
+      })
+    </script>
+  </body>
+</html>

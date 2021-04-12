@@ -1,0 +1,26 @@
+{
+  "name": "monster-train-bot",
+  "version": "1.0.0",
+  "description": "Monster Train Twitch Bot",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "",
+  "license": "ISC",
+  "build": {
+    "appId": "monster-train-bot",
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "dependencies": {
+    "twitch-bot": "^1.3.5"
+  },
+  "devDependencies": {
+    "electron": "^9.0.2",
+    "electron-builder": "^22.7.0"
+  }
+}
